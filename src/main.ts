@@ -26,7 +26,7 @@ export const bootstrap = async () => {
   SwaggerModule.setup(
     '/docs',
     app,
-    { ...document, openapi: '3.1.0' },
+    { ...document },
     { yamlDocumentUrl: 'schema.yaml' },
   );
 
