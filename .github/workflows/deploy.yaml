@@ -57,4 +57,5 @@ jobs:
               -e JWT_SECRET=${{ secrets.JWT_SECRET }} \
               -e JWT_EXPIRES_IN=${{ secrets.JWT_EXPIRES_IN }} \
               -e HASH_ROUNDS=${{ secrets.HASH_ROUNDS }} \
+              --restart unless-stopped \
               temarych/unifine-api:latest
