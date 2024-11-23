@@ -68,7 +68,6 @@ export class CheckService {
   public async findAllByAuthorId(authorId: string): Promise<Check[]> {
     return this.checkRepository.find({
       where: { authorId },
-      select: { id: true, summary: true },
     });
   }
 
