@@ -35,6 +35,13 @@ export class Check {
   @Column({ nullable: true })
   public authorId: string;
 
+  @Column({
+    type: 'timestamptz',
+    nullable: true,
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  public createdAt: Date;
+
   @ManyToOne(() => User, (user) => user.checks, {
     onDelete: 'CASCADE',
   })

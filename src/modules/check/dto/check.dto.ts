@@ -18,6 +18,9 @@ export class CheckDto {
   @ApiProperty({ type: [IssueDto] })
   public issues: IssueDto[];
 
+  @ApiProperty()
+  public createdAt: Date;
+
   public static fromEntity(entity: Check): CheckDto {
     const dto = new CheckDto();
 
@@ -26,6 +29,7 @@ export class CheckDto {
     dto.prompt = entity.prompt;
     dto.summary = entity.summary;
     dto.issues = entity.issues.map(IssueDto.fromEntity);
+    dto.createdAt = entity.createdAt;
 
     return dto;
   }

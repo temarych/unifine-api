@@ -12,12 +12,16 @@ export class CheckPreviewDto {
   @ApiProperty()
   public summary: string;
 
+  @ApiProperty()
+  public createdAt: Date;
+
   public static fromEntity(entity: Check): CheckDto {
     const dto = new CheckDto();
 
     dto.id = entity.id;
     dto.title = entity.title;
     dto.summary = entity.summary;
+    dto.createdAt = entity.createdAt;
 
     return dto;
   }
