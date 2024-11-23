@@ -7,16 +7,12 @@ export class CheckPreviewDto {
   public id: string;
 
   @ApiProperty()
-  public prompt: string;
-
-  @ApiProperty()
   public summary: string;
 
   public static fromEntity(entity: Check): CheckDto {
     const dto = new CheckDto();
 
     dto.id = entity.id;
-    dto.prompt = entity.prompt;
     dto.summary = entity.summary;
 
     return dto;
