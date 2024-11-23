@@ -5,6 +5,7 @@ import { ApiErrorCode } from '@modules/error/api-error-code.enum';
 import { CreateCheckDto } from './dto/create-check.dto';
 import { CheckService } from './check.service';
 import { CheckDto } from './dto/check.dto';
+import { CheckPreviewDto } from './dto/check-preview.dto';
 
 @Controller('checks')
 export class CheckController {
@@ -28,10 +29,10 @@ export class CheckController {
     operationId: 'getChecks',
     tags: ['check'],
   })
-  @ApiOkResponse({ type: [CheckDto] })
+  @ApiOkResponse({ type: [CheckPreviewDto] })
   public async getChecks() {
     const checks = await this.checkService.findAll();
-    return checks.map(CheckDto.fromEntity);
+    return checks.map(CheckPreviewDto.fromEntity);
   }
 
   @Get(':id')

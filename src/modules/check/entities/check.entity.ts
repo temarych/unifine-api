@@ -1,5 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { CheckResponse } from '../interfaces/response.interface';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Issue } from '@modules/issue/entities/issue.entity';
 
 @Entity()
 export class Check {
@@ -9,6 +9,9 @@ export class Check {
   @Column()
   public prompt: string;
 
-  @Column('json')
-  public response: CheckResponse;
+  @Column()
+  public summary: string;
+
+  @OneToMany(() => Issue, (issue) => issue.check)
+  public issues: Issue[];
 }
