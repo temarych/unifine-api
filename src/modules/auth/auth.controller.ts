@@ -1,6 +1,7 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiCreatedResponse,
   ApiOkResponse,
   ApiOperation,
   ApiUnauthorizedResponse,
@@ -17,12 +18,13 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('signup')
+  @HttpCode(HttpStatus.CREATED)
   @ApiOperation({
     summary: 'Sign up',
     operationId: 'signup',
     tags: ['user'],
   })
-  @ApiOkResponse({ type: SignupResponseDto })
+  @ApiCreatedResponse({ type: SignupResponseDto })
   @ApiUnauthorizedResponse({ type: ApiErrorDto })
   @ApiBadRequestResponse({ type: ApiErrorDto })
   public async signUp(@Body() data: SignupRequestDto) {
@@ -31,6 +33,7 @@ export class AuthController {
   }
 
   @Post('login')
+  @HttpCode(HttpStatus.OK)
   @ApiOperation({
     summary: 'Log in',
     operationId: 'login',
