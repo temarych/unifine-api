@@ -23,13 +23,14 @@ export class Check {
   @Column({ nullable: true })
   public authorId: string;
 
-  @ManyToOne(() => User, (user) => user.checks)
+  @ManyToOne(() => User, (user) => user.checks, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'authorId' })
   public author: User;
 
   @OneToMany(() => Issue, (issue) => issue.check, {
     cascade: true,
-    onDelete: 'CASCADE',
   })
   public issues: Issue[];
 }

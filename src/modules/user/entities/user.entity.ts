@@ -14,7 +14,6 @@ export class User {
 
   @OneToMany(() => Check, (check) => check.author, {
     cascade: true,
-    onDelete: 'CASCADE',
   })
   public checks: Check[];
 }

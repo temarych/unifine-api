@@ -25,6 +25,8 @@ export class Issue {
   @Column()
   public endIndex: number;
 
-  @ManyToOne(() => Check, (check) => check.issues)
+  @ManyToOne(() => Check, (check) => check.issues, {
+    onDelete: 'CASCADE',
+  })
   public check: Check;
 }
