@@ -12,7 +12,7 @@ export class CheckPreviewDto {
   @ApiProperty()
   public summary: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: 'string', format: 'date-time' })
   public createdAt: Date;
 
   public static fromEntity(entity: Check): CheckDto {

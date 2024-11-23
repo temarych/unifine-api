@@ -18,7 +18,7 @@ export class CheckDto {
   @ApiProperty({ type: [IssueDto] })
   public issues: IssueDto[];
 
-  @ApiProperty()
+  @ApiProperty({ type: 'string', format: 'date-time' })
   public createdAt: Date;
 
   public static fromEntity(entity: Check): CheckDto {
