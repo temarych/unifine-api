@@ -6,9 +6,13 @@ import {
   Param,
   Post,
   Req,
+  UploadedFile,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import {
+  ApiBody,
+  ApiConsumes,
   ApiCreatedResponse,
   ApiForbiddenResponse,
   ApiNoContentResponse,
@@ -18,6 +22,7 @@ import {
   ApiSecurity,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiError } from '@modules/error/api-error.entity';
 import { ApiErrorCode } from '@modules/error/api-error-code.enum';
 import { ApiErrorDto } from '@modules/error/api-error.dto';
@@ -28,6 +33,7 @@ import { CheckService } from './check.service';
 import { CheckDto } from './dto/check.dto';
 import { CheckPreviewDto } from './dto/check-preview.dto';
 import { AuthorGuard } from './guards/author.guard';
+import { CreateCheckFromFileDto } from './dto/create-check-from-file.dto';
 
 @Controller('checks')
 export class CheckController {
@@ -46,6 +52,28 @@ export class CheckController {
   public async createCheck(@Body() body: CreateCheckDto, @Req() request) {
     const user = request.user as User;
     const check = await this.checkService.create(body, user.id);
+    return CheckDto.fromEntity(check);
+  }
+
+  @Post('/file')
+  @UseGuards(AuthGuard)
+  @UseInterceptors(FileInterceptor('file'))
+  @ApiOperation({
+    summary: 'Create a check from a file',
+    operationId: 'createCheckFromFile',
+    tags: ['check'],
+  })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({ type: CreateCheckFromFileDto })
+  @ApiSecurity('bearer')
+  @ApiCreatedResponse({ type: CheckDto })
+  @ApiUnauthorizedResponse({ type: ApiErrorDto })
+  public async createCheckFromFile(
+    @UploadedFile() file: Express.Multer.File,
+    @Req() request,
+  ) {
+    const user = request.user as User;
+    const check = await this.checkService.createFromFile(file.buffer, user.id);
     return CheckDto.fromEntity(check);
   }
 
