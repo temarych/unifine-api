@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeepPartial, Repository } from 'typeorm';
 import { OpenaiService } from '@modules/openai/openai.service';
-import { Issue } from '@modules/issue/entities/issue.entity';
+import { IssueService } from '@modules/issue/issue.service';
 import { Check } from './entities/check.entity';
 import { getCheckGrammarPrompt } from './prompts/check-grammar.prompt';
 
@@ -10,10 +10,9 @@ import { getCheckGrammarPrompt } from './prompts/check-grammar.prompt';
 export class CheckService {
   constructor(
     private readonly openaiService: OpenaiService,
+    private readonly issueService: IssueService,
     @InjectRepository(Check)
     private readonly checkRepository: Repository<Check>,
-    @InjectRepository(Issue)
-    private readonly issueRepository: Repository<Issue>,
   ) {}
 
   public async create(data: DeepPartial<Check>): Promise<Check> {
@@ -28,7 +27,7 @@ export class CheckService {
     const content = result.choices[0].message.content as string;
     const response = JSON.parse(content) as Check;
 
-    const issues = await this.issueRepository.save(response.issues);
+    const issues = await this.issueService.createMany(response.issues);
 
     const check = await this.checkRepository.save({
       ...data,

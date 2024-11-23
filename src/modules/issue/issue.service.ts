@@ -14,6 +14,10 @@ export class IssueService {
     return await this.issueRepository.save(data);
   }
 
+  public async createMany(data: DeepPartial<Issue>[]): Promise<Issue[]> {
+    return await this.issueRepository.save(data);
+  }
+
   public async findAll(): Promise<Issue[]> {
     return this.issueRepository.find();
   }
