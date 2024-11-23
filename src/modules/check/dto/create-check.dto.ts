@@ -1,9 +1,18 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateCheckDto {
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty()
-  public prompt: string;
+  @ApiProperty({ required: false })
+  public topic?: string;
+
+  @ApiProperty({ required: false })
+  public style?: string;
+
+  @ApiProperty({ required: false })
+  public excludedWords?: string;
+
+  @ApiProperty({ required: false })
+  public prompt?: string;
+
+  @ApiProperty({ type: 'string', format: 'binary', required: false })
+  public file?: Express.Multer.File;
 }

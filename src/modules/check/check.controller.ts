@@ -33,7 +33,6 @@ import { CheckService } from './check.service';
 import { CheckDto } from './dto/check.dto';
 import { CheckPreviewDto } from './dto/check-preview.dto';
 import { AuthorGuard } from './guards/author.guard';
-import { CreateCheckFromFileDto } from './dto/create-check-from-file.dto';
 
 @Controller('checks')
 export class CheckController {
@@ -41,39 +40,32 @@ export class CheckController {
 
   @Post()
   @UseGuards(AuthGuard)
+  @UseInterceptors(FileInterceptor('file'))
   @ApiOperation({
     summary: 'Create a check',
     operationId: 'createCheck',
     tags: ['check'],
   })
-  @ApiSecurity('bearer')
-  @ApiCreatedResponse({ type: CheckDto })
-  @ApiUnauthorizedResponse({ type: ApiErrorDto })
-  public async createCheck(@Body() body: CreateCheckDto, @Req() request) {
-    const user = request.user as User;
-    const check = await this.checkService.create(body, user.id);
-    return CheckDto.fromEntity(check);
-  }
-
-  @Post('/file')
-  @UseGuards(AuthGuard)
-  @UseInterceptors(FileInterceptor('file'))
-  @ApiOperation({
-    summary: 'Create a check from a file',
-    operationId: 'createCheckFromFile',
-    tags: ['check'],
-  })
   @ApiConsumes('multipart/form-data')
-  @ApiBody({ type: CreateCheckFromFileDto })
+  @ApiBody({ type: CreateCheckDto })
   @ApiSecurity('bearer')
   @ApiCreatedResponse({ type: CheckDto })
   @ApiUnauthorizedResponse({ type: ApiErrorDto })
-  public async createCheckFromFile(
-    @UploadedFile() file: Express.Multer.File,
+  public async createCheck(
+    @Body() body: CreateCheckDto,
     @Req() request,
+    @UploadedFile() file?: Express.Multer.File,
   ) {
     const user = request.user as User;
-    const check = await this.checkService.createFromFile(file.buffer, user.id);
+
+    console.log(body);
+
+    const check = await this.checkService.create({
+      ...body,
+      file,
+      authorId: user.id,
+    });
+
     return CheckDto.fromEntity(check);
   }
 

@@ -39,4 +39,8 @@ export const apiErrorMap: IApiErrorMap = {
     status: HttpStatus.FORBIDDEN,
     message: 'Not author',
   },
+  [ApiErrorCode.NoPromptSpecified]: {
+    status: HttpStatus.BAD_REQUEST,
+    message: 'No prompt specified',
+  },
 };

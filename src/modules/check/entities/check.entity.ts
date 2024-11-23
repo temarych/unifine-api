@@ -14,11 +14,20 @@ export class Check {
   @PrimaryGeneratedColumn('uuid')
   public id: string;
 
-  @Column()
+  @Column('text')
   public prompt: string;
 
   @Column()
   public summary: string;
+
+  @Column({ nullable: true })
+  public topic?: string;
+
+  @Column({ nullable: true })
+  public style?: string;
+
+  @Column({ nullable: true })
+  public excludedWords?: string;
 
   @Column({ nullable: true })
   public authorId: string;

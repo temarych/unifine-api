@@ -7,4 +7,5 @@ export enum ApiErrorCode {
   IncorrectPassword = 'incorrect-password',
   EmailNotUnique = 'email-not-unique',
   NotAuthor = 'not-author',
+  NoPromptSpecified = 'no-prompt-specified',
 }

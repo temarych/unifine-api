@@ -4,8 +4,14 @@ import { DeepPartial, Repository } from 'typeorm';
 import { OpenaiService } from '@modules/openai/openai.service';
 import { IssueService } from '@modules/issue/issue.service';
 import { PdfService } from '@modules/pdf/pdf.service';
+import { ApiErrorCode } from '@modules/error/api-error-code.enum';
+import { ApiError } from '@modules/error/api-error.entity';
 import { Check } from './entities/check.entity';
-import { getCheckGrammarPrompt } from './prompts/check-grammar.prompt';
+import {
+  CheckGrammarPromptOptions,
+  getCheckGrammarPrompt,
+} from './prompts/check-grammar.prompt';
+import { CreateCheckOptions } from './check.service.types';
 
 @Injectable()
 export class CheckService {
@@ -17,36 +23,34 @@ export class CheckService {
     private readonly checkRepository: Repository<Check>,
   ) {}
 
-  public async create(
-    data: DeepPartial<Check>,
-    authorId: string,
-  ): Promise<Check> {
-    const result = await this.generate(data.prompt as string);
+  public async create(options: CreateCheckOptions): Promise<Check> {
+    const prompt = options.file
+      ? await this.pdfService.parse(options.file.buffer)
+      : options.prompt;
+
+    if (!prompt) throw new ApiError(ApiErrorCode.NoPromptSpecified);
+
+    const result = await this.generate(prompt as string, options);
     const issues = await this.issueService.createMany(result.issues);
 
     const check = await this.checkRepository.save({
-      ...data,
+      ...options,
       ...result,
+      prompt,
       issues,
-      author: { id: authorId },
     });
 
     return check;
   }
 
-  public async createFromFile(
-    buffer: Buffer,
-    authorId: string,
+  public async generate(
+    prompt: string,
+    options: CheckGrammarPromptOptions,
   ): Promise<Check> {
-    const prompt = await this.pdfService.parse(buffer);
-    return await this.create({ prompt }, authorId);
-  }
-
-  public async generate(prompt: string): Promise<Check> {
     const result = await this.openaiService.chat.completions.create({
       model: 'gpt-3.5-turbo',
       messages: [
-        { role: 'system', content: getCheckGrammarPrompt() },
+        { role: 'system', content: getCheckGrammarPrompt(options) },
         { role: 'user', content: prompt as string },
       ],
     });
