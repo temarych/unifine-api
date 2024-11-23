@@ -15,7 +15,7 @@ export const bootstrap = async () => {
   app.useGlobalFilters(new ApiErrorFilter());
 
   const config = new DocumentBuilder()
-    .setTitle('Nest Template')
+    .setTitle('UniFine')
     .setVersion('1.0')
     .addServer(process.env.PUBLIC_URL as string)
     .addBearerAuth()
