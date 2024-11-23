@@ -58,8 +58,6 @@ export class CheckController {
   ) {
     const user = request.user as User;
 
-    console.log(body);
-
     const check = await this.checkService.create({
       ...body,
       file,

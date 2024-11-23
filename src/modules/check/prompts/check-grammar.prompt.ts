@@ -11,6 +11,7 @@ export const getCheckGrammarPrompt = (options: CheckGrammarPromptOptions) => `
   and respond with JSON in the following format
 
   {
+    "title": "string",
     "summary": "string",
     "issues": [
       {

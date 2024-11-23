@@ -18,6 +18,9 @@ export class Check {
   public prompt: string;
 
   @Column()
+  public title: string;
+
+  @Column()
   public summary: string;
 
   @Column({ nullable: true })

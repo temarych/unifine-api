@@ -10,6 +10,9 @@ export class CheckDto {
   public prompt: string;
 
   @ApiProperty()
+  public title: string;
+
+  @ApiProperty()
   public summary: string;
 
   @ApiProperty({ type: [IssueDto] })
@@ -19,6 +22,7 @@ export class CheckDto {
     const dto = new CheckDto();
 
     dto.id = entity.id;
+    dto.title = entity.title;
     dto.prompt = entity.prompt;
     dto.summary = entity.summary;
     dto.issues = entity.issues.map(IssueDto.fromEntity);
