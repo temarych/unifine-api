@@ -6,4 +6,5 @@ export enum ApiErrorCode {
   EntityNotFound = 'entity-not-found',
   IncorrectPassword = 'incorrect-password',
   EmailNotUnique = 'email-not-unique',
+  NotAuthor = 'not-author',
 }

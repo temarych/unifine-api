@@ -15,7 +15,10 @@ export class CheckService {
     private readonly checkRepository: Repository<Check>,
   ) {}
 
-  public async create(data: DeepPartial<Check>): Promise<Check> {
+  public async create(
+    data: DeepPartial<Check>,
+    authorId: string,
+  ): Promise<Check> {
     const result = await this.openaiService.chat.completions.create({
       model: 'gpt-3.5-turbo',
       messages: [
@@ -33,6 +36,7 @@ export class CheckService {
       ...data,
       ...response,
       issues,
+      author: { id: authorId },
     });
 
     return check;
@@ -40,6 +44,12 @@ export class CheckService {
 
   public async findAll(): Promise<Check[]> {
     return this.checkRepository.find();
+  }
+
+  public async findAllByAuthorId(authorId: string): Promise<Check[]> {
+    return this.checkRepository.find({
+      where: { authorId },
+    });
   }
 
   public async findById(id: string): Promise<Check | null> {

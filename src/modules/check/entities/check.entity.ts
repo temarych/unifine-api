@@ -1,5 +1,13 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Issue } from '@modules/issue/entities/issue.entity';
+import { User } from '@modules/user/entities/user.entity';
 
 @Entity()
 export class Check {
@@ -12,6 +20,16 @@ export class Check {
   @Column()
   public summary: string;
 
-  @OneToMany(() => Issue, (issue) => issue.check)
+  @Column({ nullable: true })
+  public authorId: string;
+
+  @ManyToOne(() => User, (user) => user.checks)
+  @JoinColumn({ name: 'authorId' })
+  public author: User;
+
+  @OneToMany(() => Issue, (issue) => issue.check, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
   public issues: Issue[];
 }

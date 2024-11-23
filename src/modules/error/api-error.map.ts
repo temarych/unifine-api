@@ -35,4 +35,8 @@ export const apiErrorMap: IApiErrorMap = {
     status: HttpStatus.CONFLICT,
     message: 'Email is not unique',
   },
+  [ApiErrorCode.NotAuthor]: {
+    status: HttpStatus.FORBIDDEN,
+    message: 'Not author',
+  },
 };
