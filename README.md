@@ -1,73 +1,149 @@
+# 🎓 UniFine Backend
+
 <p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
+  <a href="https://nestjs.com/" target="_blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.1-blue.svg)](https://www.typescriptlang.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-20+-green.svg)](https://nodejs.org/)
+[![NestJS](https://img.shields.io/badge/NestJS-10.0-red.svg)](https://nestjs.com/)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+UniFine is a server-side application built with the **NestJS** framework. It powers the UniFine mobile applications(Android, iOS), providing APIs for real-time AI-driven text analysis, document management, user authentication.
 
-## Description
+---
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 🚀 Features
 
-## Installation
+- **AI-Driven Analysis**: Integration with OpenAI API for advanced grammar, spelling, and style analysis.
+- **Plagiarism Detection**: Comprehensive search for matching content from various sources.
+- **User Management**: Secure authentication, authorization, and account management.
+- **Document Handling**: CRUD operations for academic and personal documents.
+- **Scalable Architecture**: Modularized services with clear separation of concerns.
 
-```bash
-$ yarn install
+---
+
+## 🛠️ Technology Stack
+
+- **Framework**: [NestJS](https://nestjs.com/)
+- **Language**: TypeScript
+- **Database**: PostgreSQL with [TypeORM](https://typeorm.io/)
+- **AI Integration**: OpenAI API
+- **Authentication**: JWT with Passport.js
+- **Caching**: Redis
+- **API Documentation**: Swagger
+- **Testing**: Jest
+- **Deployment**: Docker + Kubernetes (K8s)
+
+---
+
+## 📦 Installation
+
+### Prerequisites
+
+- **Node.js** v18+
+- **Yarn** package manager
+- **PostgreSQL** for database
+
+### Steps
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/unifine-backend.git
+   cd unifine-backend
+   ```
+
+2. Install dependencies:
+   ```bash
+   yarn install
+   ```
+
+3. Configure environment variables:
+   - Copy `.env.example` to `.env` and set the required variables:
+     ```bash
+     cp .env.example .env
+     ```
+
+4. Run database migrations:
+   ```bash
+   yarn run migration:run
+   ```
+
+5. Start the application:
+   - Development mode:
+     ```bash
+     yarn run start:dev
+     ```
+   - Production mode:
+     ```bash
+     yarn run start:prod
+     ```
+
+---
+
+## 📖 API Documentation
+
+UniFine Backend provides a Swagger-based API documentation. Access it by running the server and navigating to:
+
+```
+http://localhost:<PORT>/docs
 ```
 
-## Running the app
+You can also directly access OpenAPI schema by typing:
 
-```bash
-# development
-$ yarn run start
-
-# watch mode
-$ yarn run start:dev
-
-# production mode
-$ yarn run start:prod
+```
+http://localhost:<PORT>/schema.yaml
 ```
 
-## Test
+## 📂 Project Structure
 
-```bash
-# unit tests
-$ yarn run test
-
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
+```plaintext
+src/
+├── auth/             # Authentication and Authorization logic
+├── common/           # Shared modules, constants, and utilities
+├── documents/        # Document handling logic
+├── users/            # User management module
+├── analytics/        # Analytics and progress tracking
+├── ai/               # AI integration for text analysis
+├── config/           # Configuration files
+├── database/         # Database entities and migrations
+└── main.ts           # Application entry point
 ```
 
-## Support
+---
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## 🛡️ Security
 
-## Stay in touch
+- **Data Protection**: User data are securely handled.
+- **Authentication**: Implements industry-standard JWT-based authentication.
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+---
 
-## License
+## 🌟 Contributing
 
-Nest is [MIT licensed](LICENSE).
+Contributions are welcome! To get started:
+
+1. Fork the repository.
+2. Create a new branch:
+   ```bash
+   git checkout -b feature/awesome-feature
+   ```
+3. Commit your changes:
+   ```bash
+   git commit -m 'Add an awesome feature'
+   ```
+4. Push to the branch:
+   ```bash
+   git push origin feature/awesome-feature
+   ```
+5. Open a Pull Request.
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+---
+
+Happy coding! 🚀
