@@ -1,1 +1,1 @@
-export const normalize = (text: string) => text.trim();
+export const normalize = (text: string) => text.replace(/\n/g, ' ').trim();

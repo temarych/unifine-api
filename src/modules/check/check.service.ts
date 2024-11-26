@@ -14,7 +14,6 @@ import {
 } from './prompts/check-grammar.prompt';
 import { CreateCheckOptions } from './check.service.types';
 import { normalize } from './helpers/normalize';
-import { getTextPositions } from './helpers/getTextPositions';
 
 @Injectable()
 export class CheckService {
@@ -67,12 +66,7 @@ export class CheckService {
     const content = result.choices[0].message.content as string;
     const response = JSON.parse(content) as Check;
 
-    const issues = response.issues.map((issue) => {
-      const positions = getTextPositions(prompt, issue.text);
-      return { ...issue, start: positions?.start, end: positions?.end };
-    });
-
-    return { ...response, issues };
+    return response;
   }
 
   public async findAll(): Promise<Check[]> {
