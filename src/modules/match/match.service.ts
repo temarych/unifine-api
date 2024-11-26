@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DeepPartial, Repository } from 'typeorm';
 import { CheckService } from '@modules/check/check.service';
 import { ApiError } from '@modules/error/api-error.entity';
 import { ApiErrorCode } from '@modules/error/api-error-code.enum';
@@ -32,5 +32,21 @@ export class MatchService {
     );
 
     return matches;
+  }
+
+  public async findManyByCheckId(checkId: string): Promise<Match[]> {
+    return this.matchRepository.find({ where: { check: { id: checkId } } });
+  }
+
+  public async findById(id: string): Promise<Match | null> {
+    return this.matchRepository.findOne({ where: { id } });
+  }
+
+  public async update(id: string, data: DeepPartial<Match>): Promise<void> {
+    await this.matchRepository.update(id, data);
+  }
+
+  public async delete(id: string): Promise<void> {
+    await this.matchRepository.delete(id);
   }
 }
