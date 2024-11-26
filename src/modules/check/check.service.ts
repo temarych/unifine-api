@@ -35,9 +35,10 @@ export class CheckService {
 
     const prompt = normalize(text);
 
-    const { score: aiScore } = await this.saplingService.checkForAI(prompt);
+    const aiCheckResult = await this.saplingService.checkForAI(prompt);
     const result = await this.generate(prompt as string, options);
     const issues = await this.issueService.createMany(result.issues);
+    const aiScore = aiCheckResult.score * 100;
 
     const check = await this.checkRepository.save({
       ...options,
