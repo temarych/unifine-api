@@ -27,13 +27,18 @@ export class MatchService {
 
     const results = await this.plagiarismService.getMatches(check.prompt);
 
-    const matches = await this.matchRepository.save(
-      results.map((result) => ({
-        url: result.source,
-        score: result.score,
-        check,
-      })),
+    const mappedResults = results.map((result) => ({
+      url: result.source,
+      score: result.score,
+      check,
+    }));
+
+    const uniqueResults = mappedResults.filter(
+      (result, index, self) =>
+        index === self.findIndex((t) => t.url === result.url),
     );
+
+    const matches = await this.matchRepository.save(uniqueResults);
 
     return matches;
   }
