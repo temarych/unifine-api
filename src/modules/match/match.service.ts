@@ -17,6 +17,10 @@ export class MatchService {
   ) {}
 
   public async match(checkId: string): Promise<Match[]> {
+    const candidates = await this.findManyByCheckId(checkId);
+
+    if (candidates.length) return candidates;
+
     const check = await this.checkService.findById(checkId);
 
     if (!check) throw new ApiError(ApiErrorCode.EntityNotFound);
