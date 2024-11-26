@@ -5,6 +5,7 @@ import { UserModule } from '@modules/user/user.module';
 import { AuthModule } from '@modules/auth/auth.module';
 import { CheckModule } from '@modules/check/check.module';
 import { IssueModule } from '@modules/issue/issue.module';
+import { MatchModule } from '@modules/match/match.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { IssueModule } from '@modules/issue/issue.module';
     UserModule,
     CheckModule,
     IssueModule,
+    MatchModule,
   ],
 })
 export class AppModule {}

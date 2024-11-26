@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { Issue } from '@modules/issue/entities/issue.entity';
 import { User } from '@modules/user/entities/user.entity';
+import { Match } from '@modules/match/entities/match.entity';
 
 @Entity()
 export class Check {
@@ -52,4 +53,9 @@ export class Check {
     cascade: true,
   })
   public issues: Issue[];
+
+  @OneToMany(() => Match, (match) => match.check, {
+    cascade: true,
+  })
+  public matches: Match[];
 }
