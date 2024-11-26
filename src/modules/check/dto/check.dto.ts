@@ -15,6 +15,9 @@ export class CheckDto {
   @ApiProperty()
   public summary: string;
 
+  @ApiProperty()
+  public aiScore: number;
+
   @ApiProperty({ type: [IssueDto] })
   public issues: IssueDto[];
 
@@ -30,6 +33,7 @@ export class CheckDto {
     dto.summary = entity.summary;
     dto.issues = entity.issues.map(IssueDto.fromEntity);
     dto.createdAt = entity.createdAt;
+    dto.aiScore = entity.aiScore;
 
     return dto;
   }

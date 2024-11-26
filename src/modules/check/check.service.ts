@@ -6,12 +6,14 @@ import { IssueService } from '@modules/issue/issue.service';
 import { PdfService } from '@modules/pdf/pdf.service';
 import { ApiErrorCode } from '@modules/error/api-error-code.enum';
 import { ApiError } from '@modules/error/api-error.entity';
+import { SaplingService } from '@modules/sapling/sapling.service';
 import { Check } from './entities/check.entity';
 import {
   CheckGrammarPromptOptions,
   getCheckGrammarPrompt,
 } from './prompts/check-grammar.prompt';
 import { CreateCheckOptions } from './check.service.types';
+import { normalize } from './helpers/normalize';
 
 @Injectable()
 export class CheckService {
@@ -19,17 +21,21 @@ export class CheckService {
     private readonly openaiService: OpenaiService,
     private readonly issueService: IssueService,
     private readonly pdfService: PdfService,
+    private readonly saplingService: SaplingService,
     @InjectRepository(Check)
     private readonly checkRepository: Repository<Check>,
   ) {}
 
   public async create(options: CreateCheckOptions): Promise<Check> {
-    const prompt = options.file
+    const text = options.file
       ? await this.pdfService.parse(options.file.buffer)
       : options.prompt;
 
-    if (!prompt) throw new ApiError(ApiErrorCode.NoPromptSpecified);
+    if (!text) throw new ApiError(ApiErrorCode.NoPromptSpecified);
 
+    const prompt = normalize(text);
+
+    const { score: aiScore } = await this.saplingService.checkForAI(prompt);
     const result = await this.generate(prompt as string, options);
     const issues = await this.issueService.createMany(result.issues);
 
@@ -38,6 +44,7 @@ export class CheckService {
       ...result,
       prompt,
       issues,
+      aiScore,
     });
 
     return check;

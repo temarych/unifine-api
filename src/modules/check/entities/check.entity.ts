@@ -36,6 +36,9 @@ export class Check {
   @Column({ nullable: true })
   public authorId: string;
 
+  @Column()
+  public aiScore: number;
+
   @Column({
     type: 'timestamptz',
     nullable: true,

@@ -58,5 +58,7 @@ jobs:
               -e JWT_EXPIRES_IN=${{ secrets.JWT_EXPIRES_IN }} \
               -e HASH_ROUNDS=${{ secrets.HASH_ROUNDS }} \
               -e OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} \
+              -e GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }} \
+              -e GOOGLE_ENGINE_ID=${{ secrets.GOOGLE_ENGINE_ID }} \
               --restart unless-stopped \
               temarych/unifine-api:latest
