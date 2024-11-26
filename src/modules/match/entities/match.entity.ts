@@ -9,7 +9,7 @@ export class Match {
   @Column()
   public url: string;
 
-  @Column()
+  @Column('double precision')
   public score: number;
 
   @ManyToOne(() => Check, (check) => check.matches, {

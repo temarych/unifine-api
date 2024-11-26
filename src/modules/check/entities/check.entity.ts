@@ -36,7 +36,7 @@ export class Check {
   @Column({ nullable: true })
   public authorId: string;
 
-  @Column()
+  @Column('double precision')
   public aiScore: number;
 
   @Column({
