@@ -41,7 +41,7 @@ UniFine is a server-side application built with the **NestJS** framework. It pow
 
 ### Prerequisites
 
-- **Node.js** v18+
+- **Node.js** v20+
 - **Yarn** package manager
 - **PostgreSQL** for database
 
