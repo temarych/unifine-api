@@ -9,7 +9,7 @@ export class SaplingService {
 
   constructor(private readonly configService: ConfigService) {
     this.axios = axios.create({
-      baseURL: `${process.env.SAPLING_API_URL}/api/v1`,
+      baseURL: this.configService.get('SAPLING_API_URL'),
     });
   }
 
