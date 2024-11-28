@@ -85,6 +85,12 @@ UniFine is a server-side application built with the **NestJS** framework. It pow
 
 UniFine Backend provides a Swagger-based API documentation. Access it by running the server and navigating to:
 
+Latest API Documentation 
+```
+https://unifine.eventbook.pp.ua/docs
+```
+
+Locally
 ```
 http://localhost:<PORT>/docs
 ```
